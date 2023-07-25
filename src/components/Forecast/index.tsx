@@ -1,10 +1,4 @@
-import {
-	getHumidityValue,
-	getPop,
-	getSunTime,
-	getVisibilityValue,
-	getWindDirection,
-} from '../../helpers';
+import { getHumidityValue, getPop, getSunTime, getVisibilityValue, getWindDirection } from '../../helpers';
 import { ForecastT } from '../../types/index';
 import Refresh from '../Icons/Refresh';
 import Sunrise from '../Icons/Sunrise';
@@ -26,7 +20,7 @@ export default function Forecast({ data }: Props) {
 	);
 
 	return (
-		<div className="w-full md:max-w-[500px] py-4 md:py-4 md:px-10 lg:px-24 h-full lg:h-auto bg-white bg-opacity-30 backdrop-blur-lg rounded drop-shadow-lg">
+		<div className="w-full md:max-w-[500px] py-4 md:py-4 md:px-10 lg:px-24 h-full lg:h-full bg-white bg-opacity-30 backdrop-blur-lg rounded drop-shadow-lg">
 			<div className="mx-auto w-[300px]">
 				<section className="text-center">
 					<button onClick={() => window.location.reload()}>
@@ -43,16 +37,13 @@ export default function Forecast({ data }: Props) {
 						{today.weather[0].main} ({today.weather[0].description})
 					</p>
 					<p className="text-sm">
-						H: <Degree temp={Math.ceil(today.main.temp_max)} /> L:{' '}
-						<Degree temp={Math.floor(today.main.temp_min)} />
+						H: <Degree temp={Math.ceil(today.main.temp_max)} /> L: <Degree temp={Math.floor(today.main.temp_min)} />
 					</p>
 				</section>
 				<section className="flex overflow-x-scroll mt-4 pb-2 mb-5">
 					{data.list.map((item, i) => (
 						<div key={i} className="inline-block text-center 2-[500px] flex-shrink-0">
-							<p className="text-sm">
-								{i === 0 ? 'Now' : new Date(item.dt * 1000).getHours()}
-							</p>
+							<p className="text-sm">{i === 0 ? 'Now' : new Date(item.dt * 1000).getHours()}</p>
 							<img
 								src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
 								alt={`weather-icon-${item.weather[0].description}`}
@@ -75,19 +66,13 @@ export default function Forecast({ data }: Props) {
 						icon="wind"
 						title="Wind"
 						info={`${Math.round(today.wind.speed)} km/h`}
-						description={`${getWindDirection(
-							Math.round(today.wind.deg)
-						)}, gusts ${today.wind.gust.toFixed(1)} km/h`}
+						description={`${getWindDirection(Math.round(today.wind.deg))}, gusts ${today.wind.gust.toFixed(1)} km/h`}
 					/>
 					<Tile
 						icon="feels"
 						title="Feels like"
 						info={<Degree temp={Math.round(today.main.feels_like)} />}
-						description={`Feels ${
-							Math.round(today.main.feels_like) < Math.round(today.main.temp)
-								? 'colder'
-								: 'warmer'
-						}`}
+						description={`Feels ${Math.round(today.main.feels_like) < Math.round(today.main.temp) ? 'colder' : 'warmer'}`}
 					/>
 					<Tile
 						icon="humidity"
@@ -105,9 +90,7 @@ export default function Forecast({ data }: Props) {
 						icon="pressure"
 						title="Pressure"
 						info={`${today.main.pressure} hPa`}
-						description={` ${
-							Math.round(today.main.pressure) < 1013 ? 'Lower' : 'Higher'
-						} than standard`}
+						description={` ${Math.round(today.main.pressure) < 1013 ? 'Lower' : 'Higher'} than standard`}
 					/>
 					<Tile
 						icon="visibility"

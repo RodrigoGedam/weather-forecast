@@ -8,11 +8,7 @@ export default function useForecast() {
 	const [forecast, setForecast] = useState<ForecastT | null>(null);
 
 	const getSearchOption = (value: string) => {
-		fetch(
-			`http://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=5&appid=${
-				process.env.REACT_APP_API_KEY
-			}`
-		)
+		fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=5&appid=578d60604a2d40792256eb1932d948c5`)
 			.then((res) => res.json())
 			.then((data) => setOptions(data))
 			.catch((e) => console.log(e));
@@ -30,7 +26,7 @@ export default function useForecast() {
 
 	const getForecast = (city: OptionsT) => {
 		fetch(
-			`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=metric&lang={pt_br}&appid=${process.env.REACT_APP_API_KEY}`
+			`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=metric&lang={pt_br}&appid=578d60604a2d40792256eb1932d948c5`
 		)
 			.then((res) => res.json())
 			.then((data) => {
@@ -44,10 +40,10 @@ export default function useForecast() {
 	};
 
 	const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.value.trim();
+		const value = e.target.value.trimStart();
 		setTerm(value);
 		if (value === '') return;
-		getSearchOption(value);
+		getSearchOption(value.trimEnd());
 	};
 
 	useEffect(() => {
